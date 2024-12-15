@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="456.0" prefWidth="847.0" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.nrc.atlasjavafx.Controladores.ProductoController">
+    <children>
+        <Label layoutX="14.0" layoutY="14.0" text="Gestión de Productos">
+            <font>
+                <Font size="24.0" />
+            </font>
+        </Label>
+        <TableView fx:id="tablaProductos" layoutX="14.0" layoutY="49.0" prefHeight="200.0" prefWidth="819.0">
+            <columns>
+                <TableColumn fx:id="colId" prefWidth="75.0" text="ID" />
+                <TableColumn fx:id="colNombre" prefWidth="182.0" text="Nombre" />
+                <TableColumn fx:id="colPrecio" prefWidth="123.0" text="Precio" />
+                <TableColumn fx:id="colStock" prefWidth="98.0" text="Stock" />
+                <TableColumn fx:id="colCategoria" prefWidth="147.0" text="Categoría" />
+            </columns>
+        </TableView>
+        <Button fx:id="btnAgregar" layoutX="608.0" layoutY="301.0" mnemonicParsing="false" onAction="#agregarProducto" prefHeight="25.0" prefWidth="90.0" styleClass="agregar" stylesheets="@mainFormDesign.css" text="Agregar" />
+        <Button fx:id="btnModificar" layoutX="608.0" layoutY="333.0" mnemonicParsing="false" onAction="#modificarProducto" prefHeight="25.0" prefWidth="90.0" styleClass="modificar" stylesheets="@mainFormDesign.css" text="Modificar" />
+        <Button fx:id="btnEliminar" layoutX="608.0" layoutY="365.0" mnemonicParsing="false" onAction="#eliminarProducto" prefHeight="25.0" prefWidth="90.0" styleClass="eliminar" stylesheets="@mainFormDesign.css" text="Eliminar" />
+        <Label layoutX="27.0" layoutY="285.0" text="Nombre:" />
+        <Label layoutX="35.0" layoutY="337.0" text="Stock:" />
+        <TextField fx:id="txtNombre" layoutX="93.0" layoutY="281.0" />
+        <TextField fx:id="txtPrecio" layoutX="93.0" layoutY="333.0" />
+        <Label layoutX="305.0" layoutY="285.0" text="Precio:" />
+        <Label layoutX="305.0" layoutY="337.0" text="Categoria:" />
+        <TextField fx:id="txtStock" layoutX="379.0" layoutY="281.0" />
+        <TextField fx:id="txtCategoria" layoutX="379.0" layoutY="333.0" />
+    </children>
+</AnchorPane>

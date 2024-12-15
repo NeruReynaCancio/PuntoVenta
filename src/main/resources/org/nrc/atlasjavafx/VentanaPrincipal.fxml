@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.text.Font?>
+
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.nrc.atlasjavafx.Controladores.VentanaPrincipalController">
+   <children>
+      <AnchorPane prefHeight="200.0" prefWidth="200.0">
+         <children>
+            <BorderPane layoutX="284.0" layoutY="119.0" prefHeight="600.0" prefWidth="1100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <left>
+                  <AnchorPane prefHeight="600.0" prefWidth="230.0" BorderPane.alignment="CENTER">
+                     <children>
+                        <AnchorPane prefHeight="600.0" prefWidth="230.0" styleClass="nav-form" stylesheets="@mainFormDesign.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <children>
+                              <AnchorPane layoutX="15.0" layoutY="26.0" prefHeight="100.0" prefWidth="230.0" styleClass="header" stylesheets="@mainFormDesign.css" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <children>
+                                    <Label layoutX="14.0" layoutY="40.0" text="Sistema de Supermercado" textFill="#ebebeb">
+                                       <font>
+                                          <Font size="15.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </AnchorPane>
+                              <Label layoutX="14.0" layoutY="117.0" text="Bienvenido," textFill="#fffafa">
+                                 <font>
+                                    <Font size="15.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="90.0" layoutY="117.0" text="Usuario" textFill="#deebeb">
+                                 <font>
+                                    <Font size="15.0" />
+                                 </font>
+                              </Label>
+                              <Button layoutX="10.0" layoutY="179.0" mnemonicParsing="false" onAction="#handleProductos" prefHeight="36.0" prefWidth="208.0" styleClass="nav-btn" stylesheets="@mainFormDesign.css" text="PRODUCTOS" />
+                              <Button layoutX="10.0" layoutY="237.0" mnemonicParsing="false" onAction="#handleProveedores" prefHeight="35.0" prefWidth="208.0" styleClass="nav-btn" stylesheets="@mainFormDesign.css" text="PROVEEDORES" />
+                              <Button layoutX="10.0" layoutY="290.0" mnemonicParsing="false" onAction="#handleEmpleados" prefHeight="37.0" prefWidth="208.0" styleClass="nav-btn" stylesheets="@mainFormDesign.css" text="EMPLEADOS" />
+                              <Button layoutX="10.0" layoutY="344.0" mnemonicParsing="false" onAction="#handleClientes" prefHeight="35.0" prefWidth="208.0" styleClass="nav-btn" stylesheets="@mainFormDesign.css" text="CLIENTES" />
+                              <Button layoutX="14.0" layoutY="551.0" mnemonicParsing="false" onAction="#handleSalir" stylesheets="@mainFormDesign.css" text="SALIR" textFill="#ebe8e8">
+                                 <styleClass>
+                                    <String fx:value="SALIR" />
+                                    <String fx:value="shadow" />
+                                 </styleClass>
+                              </Button>
+                           </children>
+                        </AnchorPane>
+                     </children>
+                  </AnchorPane>
+               </left>
+               <center>
+                  <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                     <children>
+                        <AnchorPane layoutX="141.0" layoutY="113.0" prefHeight="600.0" prefWidth="870.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <children>
+                              <AnchorPane layoutX="14.0" layoutY="20.0" prefHeight="159.0" prefWidth="847.0" stylesheets="@mainFormDesign.css">
+                                 <styleClass>
+                                    <String fx:value="white-bg" />
+                                    <String fx:value="radius" />
+                                    <String fx:value="shadow" />
+                                 </styleClass>
+                                 <children>
+                                    <ScrollPane layoutX="70.0" layoutY="-20.0" prefHeight="159.0" prefWidth="842.0" styleClass="transparent" stylesheets="@mainFormDesign.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="0.0">
+                                       <content>
+                                          <AnchorPane prefHeight="140.0" prefWidth="923.0">
+                                             <children>
+                                                <AnchorPane layoutX="14.0" layoutY="10.0" prefHeight="124.0" prefWidth="816.0" styleClass="nav-form" stylesheets="@mainFormDesign.css">
+                                                   <children>
+                                                      <ImageView fitHeight="127.0" fitWidth="402.0" layoutX="271.0" pickOnBounds="true" preserveRatio="true">
+                                                         <image>
+                                                            <Image url="@Imagenes/BannerSupermercado.jpg" />
+                                                         </image>
+                                                      </ImageView>
+                                                   </children></AnchorPane>
+                                             </children>
+                                          </AnchorPane>
+                                       </content>
+                                    </ScrollPane>
+                                 </children>
+                              </AnchorPane>
+                              <AnchorPane fx:id="contentArea" layoutX="14.0" layoutY="200.0" prefHeight="388.0" prefWidth="847.0" stylesheets="@mainFormDesign.css" AnchorPane.rightAnchor="9.0">
+                                 <styleClass>
+                                    <String fx:value="white-bg" />
+                                    <String fx:value="radius" />
+                                    <String fx:value="shadow" />
+                                 </styleClass>
+                              </AnchorPane>
+                              <Separator layoutX="14.0" layoutY="189.0" prefHeight="0.0" prefWidth="854.0" />
+                           </children>
+                        </AnchorPane>
+                     </children>
+                  </AnchorPane>
+               </center>
+            </BorderPane>
+         </children>
+      </AnchorPane>
+   </children>
+</StackPane>

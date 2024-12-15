@@ -1,18 +1,59 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER" spacing="20.0" xmlns:fx="http://javafx.com/fxml"
-      fx:controller="org.nrc.atlasjavafx.HelloController"
-      stylesheets="@styles.css"
-      styleClass="vbox">
-    <padding>
-        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
-    </padding>
+<!-- Le agregamos el controlador al que esta asociado  -->
 
-    <Label fx:id="welcomeText" styleClass="label"/>
-    <Button text="Hello!" onAction="#onHelloButtonClick" styleClass="button"/>
-</VBox>
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="432.0" prefWidth="700.0" style="-fx-background-color: #303D40;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.nrc.atlasjavafx.Controladores.ValidacionLogin">
+   <left>
+      <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <children>
+            <ImageView fitHeight="558.0" fitWidth="400.0" layoutX="-1.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@Imagenes/logo2.png" />
+               </image>
+            </ImageView>
+         </children>
+      </AnchorPane>
+   </left>
+   <right>
+      <AnchorPane prefHeight="410.0" prefWidth="300.0" BorderPane.alignment="CENTER">
+         <children>
+            <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="59.0" layoutY="29.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@Imagenes/loginsinfondo.png" />
+               </image>
+            </ImageView>
+            <Label layoutX="28.0" layoutY="172.0" text="Usuario" textFill="#c965ab">
+               <font>
+                  <Font name="System Bold Italic" size="21.0" />
+               </font>
+            </Label>
+            <Label layoutX="21.0" layoutY="220.0" text="Contraseña" textFill="#c965ab">
+               <font>
+                  <Font name="System Bold Italic" size="21.0" />
+               </font>
+            </Label>
+            <TextField fx:id="usuario" layoutX="138.0" layoutY="175.0" promptText="Usuario" />
+            <PasswordField fx:id="contraseña" layoutX="138.0" layoutY="223.0" promptText="Contraseña" />
+            <Button fx:id="botoniniciar" layoutX="79.0" layoutY="278.0" mnemonicParsing="false" onAction="#onIniciarSesionClick" style="-fx-background-color: #c965ab;" text="Iniciar Sesión">
+               <font>
+                  <Font name="System Bold Italic" size="21.0" />
+               </font>
+            </Button>
+            <Button layoutX="81.0" layoutY="341.0" mnemonicParsing="false" onAction="#onCrearCuentaclick" style="-fx-background-color: #c965ab;" text="Crear Cuenta">
+               <font>
+                  <Font name="System Bold Italic" size="21.0" />
+               </font>
+            </Button>
+         </children></AnchorPane>
+   </right>
+</BorderPane>
