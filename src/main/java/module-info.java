@@ -14,6 +14,7 @@ module org.nrc.atlasjavafx {
     requires org.mongodb.driver.core;
     requires org.mongodb.bson;
     requires java.rmi;
+    requires jbcrypt;
 
 
     opens org.nrc.atlasjavafx to javafx.fxml;

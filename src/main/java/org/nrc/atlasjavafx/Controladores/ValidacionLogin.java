@@ -5,6 +5,7 @@ import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import org.bson.Document;
+import org.nrc.atlasjavafx.Servicios.Encriptado;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -48,16 +49,19 @@ public class ValidacionLogin {
         }
     }
 
-    private String obtenerTipoUsuario(String usuario, String contraseña) {
+    private String obtenerTipoUsuario(String usuario, String contraseñaIngresada) {
         try (MongoClient mongoClient = MongoClients.create(MONGO_URI)) {
             MongoDatabase database = mongoClient.getDatabase(DATABASE_NAME);
             MongoCollection<Document> collection = database.getCollection(COLLECTION_NAME);
 
-            Document query = new Document("usuario", usuario).append("contraseña", contraseña);
+            Document query = new Document("usuario", usuario);
             Document resultado = collection.find(query).first();
 
             if (resultado != null) {
-                return resultado.getString("tipo");
+                String hashAlmacenado = resultado.getString("contraseña");
+                if (Encriptado.checkPassword(contraseñaIngresada, hashAlmacenado)) {
+                    return resultado.getString("tipo");
+                }
             }
             return null;
         } catch (Exception e) {
