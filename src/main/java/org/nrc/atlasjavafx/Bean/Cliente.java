@@ -7,15 +7,17 @@ public class Cliente {
     private int edad;
     private String genero;
     private String contacto;
-
+    private Direccion direccion;
     // Constructor
-    public Cliente(String id, String nombre, String apellidos, int edad, String genero, String contacto) {
+    public Cliente(String id, String nombre, String apellidos, int edad, String genero, String contacto, Direccion direccion) {
         this.id = id;
         this.nombre = nombre;
         this.apellidos = apellidos;
         this.edad = edad;
         this.genero = genero;
         this.contacto = contacto;
+        this.direccion = direccion;
+
     }
 
     // Getters - deben coincidir exactamente con los nombres usados en PropertyValueFactory
@@ -25,6 +27,7 @@ public class Cliente {
     public int getEdad() { return edad; }
     public String getGenero() { return genero; }
     public String getContacto() { return contacto; }
+    public Direccion getDireccion() { return direccion; }
 
     // Setters
     public void setId(String id) { this.id = id; }
@@ -33,4 +36,5 @@ public class Cliente {
     public void setEdad(int edad) { this.edad = edad; }
     public void setGenero(String genero) { this.genero = genero; }
     public void setContacto(String contacto) { this.contacto = contacto; }
+    public void setDireccion(Direccion direccion) { this.direccion = direccion; }
 }

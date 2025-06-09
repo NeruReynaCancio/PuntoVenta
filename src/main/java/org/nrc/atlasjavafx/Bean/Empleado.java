@@ -7,15 +7,16 @@ public class Empleado {
     private String contacto;
     private String genero;
     private String departamento;
+    private Direccion direccion; // Nuevo campo
 
-    // Constructor
-    public Empleado(String id, String nombre, String apellidos, String contacto, String genero, String departamento) {
+    public Empleado(String id, String nombre, String apellidos, String contacto, String genero, String departamento, Direccion direccion) {
         this.id = id;
         this.nombre = nombre;
         this.apellidos = apellidos;
         this.contacto = contacto;
         this.genero = genero;
         this.departamento = departamento;
+        this.direccion = direccion;
     }
 
     // Getters
@@ -25,7 +26,7 @@ public class Empleado {
     public String getContacto() { return contacto; }
     public String getGenero() { return genero; }
     public String getDepartamento() { return departamento; }
-
+    public Direccion getDireccion() { return direccion; }
     // Setters
     public void setId(String id) { this.id = id; }
     public void setNombre(String nombre) { this.nombre = nombre; }
@@ -33,4 +34,6 @@ public class Empleado {
     public void setContacto(String contacto) { this.contacto = contacto; }
     public void setGenero(String genero) { this.genero = genero; }
     public void setDepartamento(String departamento) { this.departamento = departamento; }
+    public void setDireccion(Direccion direccion) { this.direccion = direccion; }
+
 }

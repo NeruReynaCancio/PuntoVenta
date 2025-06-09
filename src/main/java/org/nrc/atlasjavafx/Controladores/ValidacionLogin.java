@@ -26,10 +26,7 @@ public class ValidacionLogin {
     @FXML
     private PasswordField contraseña;
 
-    // URI de conexión a MongoDB Atlas
-    private static final String MONGO_URI = "mongodb+srv://reynacancioneru:Neru2275@bda.4jnr8.mongodb.net/?retryWrites=true&w=majority&appName=BDA";
-
-    // Nombre de la base de datos y la colección
+    private static final String MONGO_URI = "mongodb+srv://reynacancioneru:Neru2275@basenube.2av5n18.mongodb.net/?retryWrites=true&w=majority&appName=BaseNube";
     private static final String DATABASE_NAME = "Punto_Venta";
     private static final String COLLECTION_NAME = "Login";
 
@@ -40,73 +37,57 @@ public class ValidacionLogin {
 
         if (usuarioIngresado.isEmpty() || contraseñaIngresada.isEmpty()) {
             mostrarAlerta("Error", "Por favor, complete todos los campos.");
-        } else if (validarCredenciales(usuarioIngresado, contraseñaIngresada)) {
-            mostrarAlerta("Éxito", "Inicio de sesión correcto.");
-            abrirVentanaPrincipal(event);
         } else {
-            mostrarAlerta("Error", "Usuario o contraseña incorrectos.");
+            String tipoUsuario = obtenerTipoUsuario(usuarioIngresado, contraseñaIngresada);
+            if (tipoUsuario != null) {
+                mostrarAlerta("Éxito", "Inicio de sesión correcto.");
+                abrirVentanaPorTipo(event, tipoUsuario);
+            } else {
+                mostrarAlerta("Error", "Usuario o contraseña incorrectos.");
+            }
         }
     }
 
-
-    @FXML
-    public void onCrearCuentaclick(ActionEvent event) {
-        try {
-            // Asegúrate de que la ruta al archivo FXML sea correcta
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/nrc/atlasjavafx/Registrar.fxml"));
-            Parent root = loader.load();
-
-            // Crea una nueva escena y etapa para la ventana de registro
-            Stage stage = new Stage();
-            stage.setScene(new Scene(root));
-            stage.setTitle("Crear Cuenta");
-            stage.show();
-
-            // Cierra la ventana actual
-            Stage currentStage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
-            currentStage.close();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private boolean validarCredenciales(String usuario, String contraseña) {
+    private String obtenerTipoUsuario(String usuario, String contraseña) {
         try (MongoClient mongoClient = MongoClients.create(MONGO_URI)) {
-            // Accede a la base de datos y la colección
             MongoDatabase database = mongoClient.getDatabase(DATABASE_NAME);
             MongoCollection<Document> collection = database.getCollection(COLLECTION_NAME);
 
-            // Busca el usuario en la base de datos
             Document query = new Document("usuario", usuario).append("contraseña", contraseña);
             Document resultado = collection.find(query).first();
 
-            return resultado != null; // Devuelve true si el usuario existe
+            if (resultado != null) {
+                return resultado.getString("tipo");
+            }
+            return null;
         } catch (Exception e) {
             e.printStackTrace();
             mostrarAlerta("Error", "No se pudo conectar a la base de datos.");
-            return false;
+            return null;
         }
     }
 
-
-    @FXML
-    private void abrirVentanaPrincipal(ActionEvent event) {
+    private void abrirVentanaPorTipo(ActionEvent event, String tipoUsuario) {
         try {
-            // Ensure the path to the FXML file is correct
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/nrc/atlasjavafx/VentanaPrincipal.fxml"));
+            String fxmlPath;
+            String titulo;
+            if ("admin".equalsIgnoreCase(tipoUsuario)) {
+                fxmlPath = "/org/nrc/atlasjavafx/VistaAdmin.fxml";
+                titulo = "Administrador";
+            } else {
+                fxmlPath = "/org/nrc/atlasjavafx/VentanaPrincipal.fxml";
+                titulo = "Empleado";
+            }
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
             Parent root = loader.load();
 
-            // Create a new scene and stage for the main window
             Stage stage = new Stage();
             stage.setScene(new Scene(root));
-            stage.setTitle("Ventana Principal");
+            stage.setTitle(titulo);
             stage.show();
 
-            // Close the current window
             Stage currentStage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
             currentStage.close();
-
         } catch (IOException e) {
             e.printStackTrace();
         }

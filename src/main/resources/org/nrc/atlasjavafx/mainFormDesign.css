@@ -54,6 +54,13 @@
     -fx-background-radius: 50px;
 }
 
+.respaldar{
+    -fx-background-color: #0f1b47;
+    -fx-padding: 5px;
+    -fx-cursor: hand;
+    -fx-background-radius: 50px;
+}
+
 
 .shadow{
     -fx-effect: dropshadow(three-pass-box,rgba(0,0,0,0.5), 5,0,0,0);

@@ -67,6 +67,27 @@ public class VentanaPrincipalController {
         }
     }
 
+    @FXML
+    public void onCrearCuentaclick(ActionEvent event) {
+        try {
+            // Asegúrate de que la ruta al archivo FXML sea correcta
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/nrc/atlasjavafx/Registrar.fxml"));
+            Parent root = loader.load();
+
+            // Crea una nueva escena y etapa para la ventana de registro
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.setTitle("Crear Cuenta");
+            stage.show();
+
+            // Cierra la ventana actual
+            Stage currentStage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+            currentStage.close();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
 
 

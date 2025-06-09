@@ -13,7 +13,9 @@ import javafx.application.Platform;
 import org.bson.Document;
 import org.bson.types.ObjectId;
 import org.nrc.atlasjavafx.Bean.Proveedor;
+import org.nrc.atlasjavafx.Servicios.ServicioRespaldo;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -33,7 +35,7 @@ public class ProveedorController implements Initializable {
     @FXML private TextField txtDireccion;
     @FXML private TextField txtAntiguedad;
 
-    private static final String MONGO_URI = "mongodb+srv://reynacancioneru:Neru2275@bda.4jnr8.mongodb.net/?retryWrites=true&w=majority&appName=BDA";
+    private static final String MONGO_URI = "mongodb+srv://reynacancioneru:Neru2275@basenube.2av5n18.mongodb.net/?retryWrites=true&w=majority&appName=BaseNube";
     private static final String DATABASE_NAME = "Punto_Venta";
     private static final String COLLECTION_NAME = "Proveedores";
 
@@ -239,15 +241,60 @@ public class ProveedorController implements Initializable {
         }
     }
 
-    private boolean validarCampos() {
-        if (txtNombre.getText().isEmpty() || txtArea.getText().isEmpty() ||
-                txtContacto.getText().isEmpty() || txtDireccion.getText().isEmpty() ||
-                txtAntiguedad.getText().isEmpty()) {
-            mostrarAlerta("Error", "Todos los campos son obligatorios", Alert.AlertType.WARNING);
-            return false;
-        }
-        return true;
+private boolean soloLetras(String texto) {
+    return texto.matches("[a-zA-Z\\s]+");
+}
+
+private boolean soloNumeros(String texto) {
+    return texto.matches("\\d+");
+}
+
+private boolean sinCaracteresEspeciales(String texto) {
+    return texto.matches("[a-zA-Z0-9\\s]+");
+}
+
+private boolean validarCampos() {
+    if (txtNombre.getText().isEmpty() || txtArea.getText().isEmpty() ||
+            txtContacto.getText().isEmpty() || txtDireccion.getText().isEmpty() ||
+            txtAntiguedad.getText().isEmpty()) {
+        mostrarAlerta("Error", "Todos los campos son obligatorios", Alert.AlertType.WARNING);
+        return false;
     }
+
+    if (!soloLetras(txtNombre.getText())) {
+        mostrarAlerta("Error", "El nombre solo debe contener letras y espacios, sin acentos", Alert.AlertType.WARNING);
+        return false;
+    }
+    if (!soloLetras(txtArea.getText())) {
+        mostrarAlerta("Error", "El área solo debe contener letras y espacios, sin acentos", Alert.AlertType.WARNING);
+        return false;
+    }
+    if (!txtContacto.getText().matches("\\d{10,}")) {
+        mostrarAlerta("Error", "El contacto debe contener solo números y al menos 10 dígitos", Alert.AlertType.WARNING);
+        return false;
+    }
+    if (!soloNumeros(txtAntiguedad.getText())) {
+        mostrarAlerta("Error", "La antigüedad solo debe contener números", Alert.AlertType.WARNING);
+        return false;
+    }
+    int antiguedad = Integer.parseInt(txtAntiguedad.getText());
+    if (antiguedad < 1 || antiguedad > 99) {
+        mostrarAlerta("Error", "La antigüedad debe estar entre 1 y 99 años", Alert.AlertType.WARNING);
+        return false;
+    }
+
+    // Validar que no haya caracteres especiales en ningún campo
+    if (!sinCaracteresEspeciales(txtNombre.getText()) ||
+            !sinCaracteresEspeciales(txtArea.getText()) ||
+            !sinCaracteresEspeciales(txtContacto.getText()) ||
+            !sinCaracteresEspeciales(txtDireccion.getText()) ||
+            !sinCaracteresEspeciales(txtAntiguedad.getText())) {
+        mostrarAlerta("Error", "No se permiten caracteres especiales", Alert.AlertType.WARNING);
+        return false;
+    }
+
+    return true;
+}
 
     private void limpiarCampos() {
         txtNombre.clear();
@@ -265,4 +312,17 @@ public class ProveedorController implements Initializable {
         alert.setContentText(mensaje);
         alert.showAndWait();
     }
+
+    @FXML
+    private void respaldarProductos() {
+        try {
+            String ruta = "respaldo_productos.json";
+            ServicioRespaldo.respaldarColeccion(collection, ruta);
+            mostrarAlerta("Éxito", "Respaldo guardado en: " + ruta, Alert.AlertType.INFORMATION);
+        } catch (IOException e) {
+            e.printStackTrace();
+            mostrarAlerta("Error", "No se pudo hacer el respaldo: " + e.getMessage(), Alert.AlertType.ERROR);
+        }
+    }
+
 }

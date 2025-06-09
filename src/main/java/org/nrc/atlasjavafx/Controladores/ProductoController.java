@@ -13,7 +13,9 @@ import javafx.application.Platform;
 import org.bson.Document;
 import org.bson.types.ObjectId;
 import org.nrc.atlasjavafx.Bean.Producto;
+import org.nrc.atlasjavafx.Servicios.ServicioRespaldo;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -31,7 +33,7 @@ public class ProductoController implements Initializable {
     @FXML private TextField txtStock;
     @FXML private TextField txtCategoria;
 
-    private static final String MONGO_URI = "mongodb+srv://reynacancioneru:Neru2275@bda.4jnr8.mongodb.net/?retryWrites=true&w=majority&appName=BDA";
+    private static final String MONGO_URI = "mongodb+srv://reynacancioneru:Neru2275@basenube.2av5n18.mongodb.net/?retryWrites=true&w=majority&appName=BaseNube";
     private static final String DATABASE_NAME = "Punto_Venta";
     private static final String COLLECTION_NAME = "Productos";
 
@@ -226,12 +228,63 @@ public class ProductoController implements Initializable {
         }
     }
 
+    @FXML
+    private void respaldarProductos() {
+        try {
+            String ruta = "respaldo_productos.json";
+            ServicioRespaldo.respaldarColeccion(collection, ruta);
+            mostrarAlerta("Éxito", "Respaldo guardado en: " + ruta, Alert.AlertType.INFORMATION);
+        } catch (IOException e) {
+            e.printStackTrace();
+            mostrarAlerta("Error", "No se pudo hacer el respaldo: " + e.getMessage(), Alert.AlertType.ERROR);
+        }
+    }
+
+    private boolean soloLetras(String texto) {
+        return texto.matches("[a-zA-Z\\s]+");
+    }
+
+    private boolean soloNumeros(String texto) {
+        return texto.matches("\\d+");
+    }
+
+    private boolean sinCaracteresEspeciales(String texto) {
+        return texto.matches("[a-zA-Z0-9\\s]+");
+    }
+
     private boolean validarCampos() {
         if (txtNombre.getText().isEmpty() || txtPrecio.getText().isEmpty() ||
                 txtStock.getText().isEmpty() || txtCategoria.getText().isEmpty()) {
             mostrarAlerta("Error", "Todos los campos son obligatorios", Alert.AlertType.WARNING);
             return false;
         }
+
+        if (!soloLetras(txtNombre.getText())) {
+            mostrarAlerta("Error", "El nombre solo debe contener letras y espacios, sin acentos", Alert.AlertType.WARNING);
+            return false;
+        }
+        if (!soloLetras(txtCategoria.getText())) {
+            mostrarAlerta("Error", "La categoría solo debe contener letras y espacios, sin acentos", Alert.AlertType.WARNING);
+            return false;
+        }
+        if (!soloNumeros(txtPrecio.getText())) {
+            mostrarAlerta("Error", "El precio solo debe contener números", Alert.AlertType.WARNING);
+            return false;
+        }
+        if (!soloNumeros(txtStock.getText())) {
+            mostrarAlerta("Error", "El stock solo debe contener números", Alert.AlertType.WARNING);
+            return false;
+        }
+
+        // Validar que no haya caracteres especiales en ningún campo
+        if (!sinCaracteresEspeciales(txtNombre.getText()) ||
+                !sinCaracteresEspeciales(txtPrecio.getText()) ||
+                !sinCaracteresEspeciales(txtStock.getText()) ||
+                !sinCaracteresEspeciales(txtCategoria.getText())) {
+            mostrarAlerta("Error", "No se permiten caracteres especiales", Alert.AlertType.WARNING);
+            return false;
+        }
+
         return true;
     }
 

@@ -1,10 +1,10 @@
 package org.nrc.atlasjavafx.Controladores;
 
-
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
+import javafx.collections.FXCollections;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -13,6 +13,7 @@ import org.bson.Document;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
@@ -27,41 +28,48 @@ public class CrearCuentaController {
     @FXML
     private PasswordField txtContrasena;
 
-    private static final String MONGO_URI = "mongodb+srv://reynacancioneru:Neru2275@bda.4jnr8.mongodb.net/?retryWrites=true&w=majority&appName=BDA";
+    @FXML
+    private ComboBox<String> cmbTipo;
+
+    private static final String MONGO_URI = "mongodb+srv://reynacancioneru:Neru2275@basenube.2av5n18.mongodb.net/?retryWrites=true&w=majority&appName=BaseNube";
     private static final String DATABASE_NAME = "Punto_Venta";
     private static final String COLLECTION_NAME = "Login";
 
     @FXML
+    public void initialize() {
+        cmbTipo.setItems(FXCollections.observableArrayList("admin", "empleado"));
+    }
+
+   @FXML
     public void registrarUsuario(ActionEvent event) {
+        if (!validarCamposRegistro()) {
+            return;
+        }
         String usuario = txtUsuario.getText();
         String contrasena = txtContrasena.getText();
+        String tipo = cmbTipo.getValue();
 
-        if (usuario.isEmpty() || contrasena.isEmpty()) {
-            mostrarAlerta("Error", "Por favor, complete todos los campos.");
+        if (guardarUsuarioEnBaseDeDatos(usuario, contrasena, tipo)) {
+            mostrarAlerta("Éxito", "Usuario registrado exitosamente.");
+            limpiarCampos();
         } else {
-            if (guardarUsuarioEnBaseDeDatos(usuario, contrasena)) {
-                mostrarAlerta("Éxito", "Usuario registrado exitosamente.");
-                limpiarCampos();
-            } else {
-                mostrarAlerta("Error", "No se pudo registrar el usuario. Es posible que ya exista.");
-            }
+            mostrarAlerta("Error", "No se pudo registrar el usuario. Es posible que ya exista.");
         }
     }
 
-    private boolean guardarUsuarioEnBaseDeDatos(String usuario, String contrasena) {
+    private boolean guardarUsuarioEnBaseDeDatos(String usuario, String contrasena, String tipo) {
         try (MongoClient mongoClient = MongoClients.create(MONGO_URI)) {
             MongoDatabase database = mongoClient.getDatabase(DATABASE_NAME);
             MongoCollection<Document> collection = database.getCollection(COLLECTION_NAME);
 
-            // Verifica si el usuario ya existe
             Document query = new Document("usuario", usuario);
             if (collection.find(query).first() != null) {
-                return false; // Usuario ya existe
+                return false;
             }
 
-            // Crea un nuevo documento y lo guarda en la base de datos
             Document nuevoUsuario = new Document("usuario", usuario)
-                    .append("contraseña", contrasena);
+                    .append("contraseña", contrasena)
+                    .append("tipo", tipo);
             collection.insertOne(nuevoUsuario);
             return true;
         } catch (Exception e) {
@@ -73,6 +81,7 @@ public class CrearCuentaController {
     private void limpiarCampos() {
         txtUsuario.clear();
         txtContrasena.clear();
+        cmbTipo.getSelectionModel().clearSelection();
     }
 
     private void mostrarAlerta(String titulo, String mensaje) {
@@ -82,29 +91,40 @@ public class CrearCuentaController {
         alert.setContentText(mensaje);
         alert.showAndWait();
     }
+    // Métodos de validación
+    private boolean soloLetrasYNumeros(String texto) {
+        return texto.matches("[a-zA-Z0-9\\s]+");
+    }
 
+    private boolean validarCamposRegistro() {
+        String usuario = txtUsuario.getText();
+        String contrasena = txtContrasena.getText();
+        String tipo = cmbTipo.getValue();
+
+        if (usuario.isEmpty() || contrasena.isEmpty() || tipo == null) {
+            mostrarAlerta("Error", "Por favor, complete todos los campos y seleccione un tipo.");
+            return false;
+        }
+        if (!soloLetrasYNumeros(usuario)) {
+            mostrarAlerta("Error", "El usuario solo debe contener letras, números y espacios, sin acentos ni caracteres especiales.");
+            return false;
+        }
+        return true;
+    }
 
     @FXML
     protected void onRegresarClick(ActionEvent event) {
         try {
-            // Ensure the path to the FXML file is correct
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/nrc/atlasjavafx/hello-view.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/nrc/atlasjavafx/VistaAdmin.fxml"));
             Parent root = loader.load();
-
-            // Create a new scene and stage for the main window
             Stage stage = new Stage();
             stage.setScene(new Scene(root));
             stage.setTitle("Ventana Principal");
             stage.show();
-
-            // Close the current window
             Stage currentStage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
             currentStage.close();
-
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
-
 }

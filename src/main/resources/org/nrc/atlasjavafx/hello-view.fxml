@@ -49,11 +49,7 @@
                   <Font name="System Bold Italic" size="21.0" />
                </font>
             </Button>
-            <Button layoutX="81.0" layoutY="341.0" mnemonicParsing="false" onAction="#onCrearCuentaclick" style="-fx-background-color: #c965ab;" text="Crear Cuenta">
-               <font>
-                  <Font name="System Bold Italic" size="21.0" />
-               </font>
-            </Button>
+
          </children></AnchorPane>
    </right>
 </BorderPane>

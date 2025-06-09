@@ -23,11 +23,13 @@
         <Button fx:id="btnAgregar" layoutX="608.0" layoutY="301.0" mnemonicParsing="false" onAction="#agregarProducto" prefHeight="25.0" prefWidth="90.0" styleClass="agregar" stylesheets="@mainFormDesign.css" text="Agregar" />
         <Button fx:id="btnModificar" layoutX="608.0" layoutY="333.0" mnemonicParsing="false" onAction="#modificarProducto" prefHeight="25.0" prefWidth="90.0" styleClass="modificar" stylesheets="@mainFormDesign.css" text="Modificar" />
         <Button fx:id="btnEliminar" layoutX="608.0" layoutY="365.0" mnemonicParsing="false" onAction="#eliminarProducto" prefHeight="25.0" prefWidth="90.0" styleClass="eliminar" stylesheets="@mainFormDesign.css" text="Eliminar" />
+        <Button fx:id="btnRespaldar" layoutX="583.0" layoutY="399.0" mnemonicParsing="false" onAction="#respaldarProductos" prefHeight="25.0" prefWidth="140.0" styleClass="respaldar" stylesheets="@mainFormDesign.css" text="Respaldar Productos" />
+
         <Label layoutX="27.0" layoutY="285.0" text="Nombre:" />
-        <Label layoutX="35.0" layoutY="337.0" text="Stock:" />
+        <Label layoutX="35.0" layoutY="337.0" text="Precio:" />
         <TextField fx:id="txtNombre" layoutX="93.0" layoutY="281.0" />
         <TextField fx:id="txtPrecio" layoutX="93.0" layoutY="333.0" />
-        <Label layoutX="305.0" layoutY="285.0" text="Precio:" />
+        <Label layoutX="305.0" layoutY="285.0" text="Stock:" />
         <Label layoutX="305.0" layoutY="337.0" text="Categoria:" />
         <TextField fx:id="txtStock" layoutX="379.0" layoutY="281.0" />
         <TextField fx:id="txtCategoria" layoutX="379.0" layoutY="333.0" />
